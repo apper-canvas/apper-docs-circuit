@@ -1,0 +1,375 @@
+{
+  "functions": [
+    {
+      "id": "create-function",
+      "method": "POST",
+      "path": "/ap/user/{companyUserId}/projects/{projectId}/ApperFunction/create",
+      "description": "Create a new serverless function in your project. This endpoint allows you to deploy custom JavaScript code that can be executed on-demand.",
+      "parameters": [
+        {
+          "name": "companyUserId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your company user account"
+        },
+        {
+          "name": "projectId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your project"
+        },
+        {
+          "name": "Name",
+          "type": "string",
+          "required": true,
+          "description": "Display name for the function"
+        },
+        {
+          "name": "SourceCode",
+          "type": "string",
+          "required": true,
+          "description": "JavaScript source code for the function"
+        },
+        {
+          "name": "RequireAuthentication",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the function requires authentication to execute"
+        },
+        {
+          "name": "RunAsAdmin",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the function should run with admin privileges"
+        }
+      ],
+      "examples": {
+        "curl": "curl -X POST 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/create' \\\n  -H 'Authorization: Bearer your-token-here' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"Name\": \"TEST_FUNCTION\",\n    \"SourceCode\": \"import { createUniversalApp } from \\\"https://test-apper-sdk.b-cdn.net/index.mjs\\\";\\n\\nasync function handler(request) {\\n  return new Response(JSON.stringify({\\n    message: \\\"Hello World!\\\"\\n  }));\\n}\\n\\nconst app = createUniversalApp({ cors: true });\\nawait app.serve(handler);\",\n    \"RequireAuthentication\": false,\n    \"RunAsAdmin\": false\n  }'",
+        "javascript": "const response = await fetch('https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/create', {\n  method: 'POST',\n  headers: {\n    'Authorization': 'Bearer your-token-here',\n    'Content-Type': 'application/json'\n  },\n  body: JSON.stringify({\n    Name: 'TEST_FUNCTION',\n    SourceCode: `import { createUniversalApp } from \"https://test-apper-sdk.b-cdn.net/index.mjs\";\n\nasync function handler(request) {\n  return new Response(JSON.stringify({\n    message: \"Hello World!\"\n  }));\n}\n\nconst app = createUniversalApp({ cors: true });\nawait app.serve(handler);`,\n    RequireAuthentication: false,\n    RunAsAdmin: false\n  })\n});\n\nconst data = await response.json();\nconsole.log(data);",
+        "python": "import requests\nimport json\n\nurl = 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/create'\nheaders = {\n    'Authorization': 'Bearer your-token-here',\n    'Content-Type': 'application/json'\n}\n\ndata = {\n    'Name': 'TEST_FUNCTION',\n    'SourceCode': '''import { createUniversalApp } from \"https://test-apper-sdk.b-cdn.net/index.mjs\";\n\nasync function handler(request) {\n  return new Response(JSON.stringify({\n    message: \"Hello World!\"\n  }));\n}\n\nconst app = createUniversalApp({ cors: true });\nawait app.serve(handler);''',\n    'RequireAuthentication': False,\n    'RunAsAdmin': False\n}\n\nresponse = requests.post(url, headers=headers, json=data)\nprint(response.json())"
+      },
+      "responses": {
+        "success": "{\n  \"data\": {\n    \"id\": 6,\n    \"name\": \"testfunction-8oab2\",\n    \"label\": \"TEST_FUNCTION\",\n    \"scriptId\": \"39753\",\n    \"executionUrl\": \"https://apper-function-proxy-test.abhishek-f6b.workers.dev/user/2881/functions/testfunction-8oab2\",\n    \"isDeployed\": true,\n    \"isActive\": true,\n    \"provider\": \"bunny\",\n    \"lastDeployedAt\": \"2025-07-08T06:12:45.469229Z\",\n    \"requireAuthentication\": false,\n    \"runAsAdmin\": false\n  },\n  \"success\": true,\n  \"message\": \"\"\n}",
+        "error": "{\n  \"data\": null,\n  \"success\": false,\n  \"message\": \"Invalid source code provided\"\n}"
+      }
+    },
+    {
+      "id": "update-function",
+      "method": "PUT",
+      "path": "/ap/user/{companyUserId}/projects/{projectId}/ApperFunction/{functionId}",
+      "description": "Update an existing serverless function. You can modify the source code, authentication requirements, and other function properties.",
+      "parameters": [
+        {
+          "name": "companyUserId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your company user account"
+        },
+        {
+          "name": "projectId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your project"
+        },
+        {
+          "name": "functionId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for the function to update"
+        },
+        {
+          "name": "Name",
+          "type": "string",
+          "required": false,
+          "description": "Updated display name for the function"
+        },
+        {
+          "name": "SourceCode",
+          "type": "string",
+          "required": false,
+          "description": "Updated JavaScript source code for the function"
+        },
+        {
+          "name": "RequireAuthentication",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the function requires authentication to execute"
+        },
+        {
+          "name": "RunAsAdmin",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the function should run with admin privileges"
+        }
+      ],
+      "examples": {
+        "curl": "curl -X PUT 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/6' \\\n  -H 'Authorization: Bearer your-token-here' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"Name\": \"UPDATED_FUNCTION\",\n    \"RequireAuthentication\": true\n  }'",
+        "javascript": "const response = await fetch('https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/6', {\n  method: 'PUT',\n  headers: {\n    'Authorization': 'Bearer your-token-here',\n    'Content-Type': 'application/json'\n  },\n  body: JSON.stringify({\n    Name: 'UPDATED_FUNCTION',\n    RequireAuthentication: true\n  })\n});\n\nconst data = await response.json();\nconsole.log(data);",
+        "python": "import requests\n\nurl = 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/6'\nheaders = {\n    'Authorization': 'Bearer your-token-here',\n    'Content-Type': 'application/json'\n}\n\ndata = {\n    'Name': 'UPDATED_FUNCTION',\n    'RequireAuthentication': True\n}\n\nresponse = requests.put(url, headers=headers, json=data)\nprint(response.json())"
+      },
+      "responses": {
+        "success": "{\n  \"data\": {\n    \"id\": 6,\n    \"name\": \"testfunction-8oab2\",\n    \"label\": \"UPDATED_FUNCTION\",\n    \"scriptId\": \"39753\",\n    \"executionUrl\": \"https://apper-function-proxy-test.abhishek-f6b.workers.dev/user/2881/functions/testfunction-8oab2\",\n    \"isDeployed\": true,\n    \"isActive\": true,\n    \"provider\": \"bunny\",\n    \"lastDeployedAt\": \"2025-07-08T06:12:45.469229Z\",\n    \"requireAuthentication\": true,\n    \"runAsAdmin\": false\n  },\n  \"success\": true,\n  \"message\": \"Function updated successfully\"\n}",
+        "error": "{\n  \"data\": null,\n  \"success\": false,\n  \"message\": \"Function not found\"\n}"
+      }
+    },
+    {
+      "id": "get-function",
+      "method": "GET",
+      "path": "/ap/user/{companyUserId}/projects/{projectId}/ApperFunction/{functionId}",
+      "description": "Retrieve details of a specific serverless function including its source code, execution URL, and configuration.",
+      "parameters": [
+        {
+          "name": "companyUserId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your company user account"
+        },
+        {
+          "name": "projectId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your project"
+        },
+        {
+          "name": "functionId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for the function to retrieve"
+        }
+      ],
+      "examples": {
+        "curl": "curl -X GET 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/6' \\\n  -H 'Authorization: Bearer your-token-here'",
+        "javascript": "const response = await fetch('https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/6', {\n  method: 'GET',\n  headers: {\n    'Authorization': 'Bearer your-token-here'\n  }\n});\n\nconst data = await response.json();\nconsole.log(data);",
+        "python": "import requests\n\nurl = 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/6'\nheaders = {\n    'Authorization': 'Bearer your-token-here'\n}\n\nresponse = requests.get(url, headers=headers)\nprint(response.json())"
+      },
+      "responses": {
+        "success": "{\n  \"data\": {\n    \"id\": 6,\n    \"name\": \"testfunction-8oab2\",\n    \"label\": \"TEST_FUNCTION\",\n    \"scriptId\": \"39753\",\n    \"executionUrl\": \"https://apper-function-proxy-test.abhishek-f6b.workers.dev/user/2881/functions/testfunction-8oab2\",\n    \"isDeployed\": true,\n    \"isActive\": true,\n    \"provider\": \"bunny\",\n    \"lastDeployedAt\": \"2025-07-08T06:12:45.469229Z\",\n    \"requireAuthentication\": false,\n    \"runAsAdmin\": false\n  },\n  \"success\": true,\n  \"message\": \"\"\n}",
+        "error": "{\n  \"data\": null,\n  \"success\": false,\n  \"message\": \"Function not found\"\n}"
+      }
+    },
+    {
+      "id": "list-functions",
+      "method": "GET",
+      "path": "/ap/user/{companyUserId}/projects/{projectId}/ApperFunction",
+      "description": "Retrieve a list of all serverless functions in your project with pagination support.",
+      "parameters": [
+        {
+          "name": "companyUserId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your company user account"
+        },
+        {
+          "name": "projectId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your project"
+        },
+        {
+          "name": "page",
+          "type": "integer",
+          "required": false,
+          "description": "Page number for pagination (default: 1)"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "required": false,
+          "description": "Number of items per page (default: 20)"
+        }
+      ],
+      "examples": {
+        "curl": "curl -X GET 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction?page=1&limit=10' \\\n  -H 'Authorization: Bearer your-token-here'",
+        "javascript": "const response = await fetch('https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction?page=1&limit=10', {\n  method: 'GET',\n  headers: {\n    'Authorization': 'Bearer your-token-here'\n  }\n});\n\nconst data = await response.json();\nconsole.log(data);",
+        "python": "import requests\n\nurl = 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction'\nparams = {'page': 1, 'limit': 10}\nheaders = {\n    'Authorization': 'Bearer your-token-here'\n}\n\nresponse = requests.get(url, headers=headers, params=params)\nprint(response.json())"
+      },
+      "responses": {
+        "success": "{\n  \"data\": {\n    \"total\": 7,\n    \"hasMore\": false,\n    \"data\": [\n      {\n        \"id\": 7,\n        \"name\": \"testfunction-1yysh\",\n        \"label\": \"TEST_FUNCTION\",\n        \"executionUrl\": \"https://apper-function-proxy-test.abhishek-f6b.workers.dev/user/2881/functions/testfunction-1yysh\",\n        \"isDeployed\": true,\n        \"isActive\": true,\n        \"lastDeployedAt\": \"2025-07-08T06:39:50.043919Z\"\n      },\n      {\n        \"id\": 6,\n        \"name\": \"testfunction-8oab2\",\n        \"label\": \"HELLO_WORLD\",\n        \"executionUrl\": \"https://apper-function-proxy-test.abhishek-f6b.workers.dev/user/2881/functions/testfunction-8oab2\",\n        \"isDeployed\": true,\n        \"isActive\": true,\n        \"lastDeployedAt\": \"2025-07-08T06:12:45.469229Z\"\n      }\n    ]\n  },\n  \"success\": true,\n  \"message\": \"\"\n}",
+        "error": "{\n  \"data\": null,\n  \"success\": false,\n  \"message\": \"Project not found\"\n}"
+      }
+    },
+    {
+      "id": "delete-function",
+      "method": "DELETE",
+      "path": "/ap/user/{companyUserId}/projects/{projectId}/ApperFunction/{functionId}",
+      "description": "Delete a serverless function from your project. This action cannot be undone.",
+      "parameters": [
+        {
+          "name": "companyUserId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your company user account"
+        },
+        {
+          "name": "projectId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your project"
+        },
+        {
+          "name": "functionId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for the function to delete"
+        }
+      ],
+      "examples": {
+        "curl": "curl -X DELETE 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/6' \\\n  -H 'Authorization: Bearer your-token-here'",
+        "javascript": "const response = await fetch('https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/6', {\n  method: 'DELETE',\n  headers: {\n    'Authorization': 'Bearer your-token-here'\n  }\n});\n\nconst data = await response.json();\nconsole.log(data);",
+        "python": "import requests\n\nurl = 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction/6'\nheaders = {\n    'Authorization': 'Bearer your-token-here'\n}\n\nresponse = requests.delete(url, headers=headers)\nprint(response.json())"
+      },
+      "responses": {
+        "success": "{\n  \"data\": null,\n  \"success\": true,\n  \"message\": \"Function deleted successfully\"\n}",
+        "error": "{\n  \"data\": null,\n  \"success\": false,\n  \"message\": \"Function not found or already deleted\"\n}"
+      }
+    }
+  ],
+  "secrets": [
+    {
+      "id": "create-secret",
+      "method": "POST",
+      "path": "/ap/user/{companyUserId}/projects/{projectId}/secrets",
+      "description": "Create a new secret for your project. Secrets are encrypted environment variables that can be used in your functions.",
+      "parameters": [
+        {
+          "name": "companyUserId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your company user account"
+        },
+        {
+          "name": "projectId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your project"
+        },
+        {
+          "name": "Name",
+          "type": "string",
+          "required": true,
+          "description": "Name of the secret (environment variable name)"
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": true,
+          "description": "Value of the secret (will be encrypted)"
+        }
+      ],
+      "examples": {
+        "curl": "curl -X POST 'https://api.apper.com/ap/user/12345/projects/project-123/secrets' \\\n  -H 'Authorization: Bearer your-token-here' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"Name\": \"API_KEY\",\n    \"Value\": \"sk-1234567890abcdef\"\n  }'",
+        "javascript": "const response = await fetch('https://api.apper.com/ap/user/12345/projects/project-123/secrets', {\n  method: 'POST',\n  headers: {\n    'Authorization': 'Bearer your-token-here',\n    'Content-Type': 'application/json'\n  },\n  body: JSON.stringify({\n    Name: 'API_KEY',\n    Value: 'sk-1234567890abcdef'\n  })\n});\n\nconst data = await response.json();\nconsole.log(data);",
+        "python": "import requests\n\nurl = 'https://api.apper.com/ap/user/12345/projects/project-123/secrets'\nheaders = {\n    'Authorization': 'Bearer your-token-here',\n    'Content-Type': 'application/json'\n}\n\ndata = {\n    'Name': 'API_KEY',\n    'Value': 'sk-1234567890abcdef'\n}\n\nresponse = requests.post(url, headers=headers, json=data)\nprint(response.json())"
+      },
+      "responses": {
+        "success": "{\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"API_KEY\",\n    \"value\": \"sk-****def\",\n    \"projectId\": \"39e2ff8942d74b88bb6bfdfa097fadeb\",\n    \"createdOn\": \"2025-07-08T06:45:27.9123294Z\",\n    \"modifiedOn\": \"2025-07-08T06:45:27.9123289Z\"\n  },\n  \"success\": true,\n  \"message\": \"\"\n}",
+        "error": "{\n  \"data\": null,\n  \"success\": false,\n  \"message\": \"Secret name already exists\"\n}"
+      }
+    },
+    {
+      "id": "update-secret",
+      "method": "PUT",
+      "path": "/ap/user/{companyUserId}/projects/{projectId}/secrets/{secretId}",
+      "description": "Update an existing secret value. The secret name cannot be changed after creation.",
+      "parameters": [
+        {
+          "name": "companyUserId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your company user account"
+        },
+        {
+          "name": "projectId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your project"
+        },
+        {
+          "name": "secretId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for the secret to update"
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "required": true,
+          "description": "New value for the secret (will be encrypted)"
+        }
+      ],
+      "examples": {
+        "curl": "curl -X PUT 'https://api.apper.com/ap/user/12345/projects/project-123/secrets/1' \\\n  -H 'Authorization: Bearer your-token-here' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"Value\": \"sk-new-secret-value-123\"\n  }'",
+        "javascript": "const response = await fetch('https://api.apper.com/ap/user/12345/projects/project-123/secrets/1', {\n  method: 'PUT',\n  headers: {\n    'Authorization': 'Bearer your-token-here',\n    'Content-Type': 'application/json'\n  },\n  body: JSON.stringify({\n    Value: 'sk-new-secret-value-123'\n  })\n});\n\nconst data = await response.json();\nconsole.log(data);",
+        "python": "import requests\n\nurl = 'https://api.apper.com/ap/user/12345/projects/project-123/secrets/1'\nheaders = {\n    'Authorization': 'Bearer your-token-here',\n    'Content-Type': 'application/json'\n}\n\ndata = {\n    'Value': 'sk-new-secret-value-123'\n}\n\nresponse = requests.put(url, headers=headers, json=data)\nprint(response.json())"
+      },
+      "responses": {
+        "success": "{\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"API_KEY\",\n    \"value\": \"sk-****123\",\n    \"projectId\": \"39e2ff8942d74b88bb6bfdfa097fadeb\",\n    \"createdOn\": \"2025-07-08T06:45:27.9123294Z\",\n    \"modifiedOn\": \"2025-07-08T07:12:15.1234567Z\"\n  },\n  \"success\": true,\n  \"message\": \"Secret updated successfully\"\n}",
+        "error": "{\n  \"data\": null,\n  \"success\": false,\n  \"message\": \"Secret not found\"\n}"
+      }
+    },
+    {
+      "id": "list-secrets",
+      "method": "GET",
+      "path": "/ap/user/{companyUserId}/projects/{projectId}/secrets",
+      "description": "Retrieve a list of all secrets in your project. Secret values are masked for security.",
+      "parameters": [
+        {
+          "name": "companyUserId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your company user account"
+        },
+        {
+          "name": "projectId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your project"
+        }
+      ],
+      "examples": {
+        "curl": "curl -X GET 'https://api.apper.com/ap/user/12345/projects/project-123/secrets' \\\n  -H 'Authorization: Bearer your-token-here'",
+        "javascript": "const response = await fetch('https://api.apper.com/ap/user/12345/projects/project-123/secrets', {\n  method: 'GET',\n  headers: {\n    'Authorization': 'Bearer your-token-here'\n  }\n});\n\nconst data = await response.json();\nconsole.log(data);",
+        "python": "import requests\n\nurl = 'https://api.apper.com/ap/user/12345/projects/project-123/secrets'\nheaders = {\n    'Authorization': 'Bearer your-token-here'\n}\n\nresponse = requests.get(url, headers=headers)\nprint(response.json())"
+      },
+      "responses": {
+        "success": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"API_KEY\",\n      \"value\": \"sk-****def\",\n      \"projectId\": \"39e2ff8942d74b88bb6bfdfa097fadeb\",\n      \"createdOn\": \"2025-07-08T06:45:27.9123294Z\",\n      \"modifiedOn\": \"2025-07-08T06:45:27.9123289Z\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"DATABASE_URL\",\n      \"value\": \"postgres://****\",\n      \"projectId\": \"39e2ff8942d74b88bb6bfdfa097fadeb\",\n      \"createdOn\": \"2025-07-08T07:30:12.4567890Z\",\n      \"modifiedOn\": \"2025-07-08T07:30:12.4567890Z\"\n    }\n  ],\n  \"success\": true,\n  \"message\": \"\"\n}",
+        "error": "{\n  \"data\": null,\n  \"success\": false,\n  \"message\": \"Project not found\"\n}"
+      }
+    },
+    {
+      "id": "delete-secret",
+      "method": "DELETE",
+      "path": "/ap/user/{companyUserId}/projects/{projectId}/secrets/{secretId}",
+      "description": "Delete a secret from your project. This action cannot be undone and will affect any functions using this secret.",
+      "parameters": [
+        {
+          "name": "companyUserId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your company user account"
+        },
+        {
+          "name": "projectId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for your project"
+        },
+        {
+          "name": "secretId",
+          "type": "string",
+          "required": true,
+          "description": "Unique identifier for the secret to delete"
+        }
+      ],
+      "examples": {
+        "curl": "curl -X DELETE 'https://api.apper.com/ap/user/12345/projects/project-123/secrets/1' \\\n  -H 'Authorization: Bearer your-token-here'",
+        "javascript": "const response = await fetch('https://api.apper.com/ap/user/12345/projects/project-123/secrets/1', {\n  method: 'DELETE',\n  headers: {\n    'Authorization': 'Bearer your-token-here'\n  }\n});\n\nconst data = await response.json();\nconsole.log(data);",
+        "python": "import requests\n\nurl = 'https://api.apper.com/ap/user/12345/projects/project-123/secrets/1'\nheaders = {\n    'Authorization': 'Bearer your-token-here'\n}\n\nresponse = requests.delete(url, headers=headers)\nprint(response.json())"
+      },
+      "responses": {
+        "success": "{\n  \"data\": null,\n  \"success\": true,\n  \"message\": \"Secret deleted successfully\"\n}",
+        "error": "{\n  \"data\": null,\n  \"success\": false,\n  \"message\": \"Secret not found or already deleted\"\n}"
+      }
+    }
+  ]
+}
