@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import MethodBadge from '@/components/molecules/MethodBadge';
-import ParameterTable from '@/components/molecules/ParameterTable';
-import CodeBlock from '@/components/molecules/CodeBlock';
-import { ApperIcon } from '@/components/ApperIcon';
+import { useState } from 'react'
+import MethodBadge from '@/components/molecules/MethodBadge'
+import ParameterTable from '@/components/molecules/ParameterTable'
+import CodeBlock from '@/components/molecules/CodeBlock'
+import ApperIcon from '@/components/ApperIcon'
 
 const EndpointSection = ({ endpoint }) => {
   const { method, path, description, parameters, examples, responses } = endpoint;
