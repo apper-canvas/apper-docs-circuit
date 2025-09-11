@@ -1,8 +1,11 @@
-import { motion } from 'framer-motion';
-import ApperIcon from '@/components/ApperIcon';
-import CodeBlock from '@/components/molecules/CodeBlock';
+import { motion } from "framer-motion";
+import React, { useState } from "react";
+import ApperIcon from "@/components/ApperIcon";
+import Error from "@/components/ui/Error";
+import CodeBlock from "@/components/molecules/CodeBlock";
 
 const Authentication = () => {
+  const [response, setResponse] = useState(null);
   const authHeaderExample = `Authorization: Bearer your-token-here`;
   const handleApiCall = async () => {
     try {
@@ -266,7 +269,7 @@ data = response.json()`;
               language="json"
               title="API Response"
             />
-          </div>https://test-apper-dev.integrately.com/images/live-chat.svg$0
+</div>
         )}
       </div>
     </motion.div>
