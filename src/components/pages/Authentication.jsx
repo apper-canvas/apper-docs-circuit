@@ -6,7 +6,7 @@ const Authentication = () => {
   const authHeaderExample = `Authorization: Bearer your-token-here`;
   const handleApiCall = async () => {
     try {
-      const res = await fetch("https://webhook.site/4cc57ff6-779d-4909-be07-d45ece4ebc34", {
+      const res = await fetch("https://test-api.apper.io/fn/16beb280d6d146da813b0088b12425c6/execute", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
