@@ -4,6 +4,20 @@ import CodeBlock from '@/components/molecules/CodeBlock';
 
 const Authentication = () => {
   const authHeaderExample = `Authorization: Bearer your-token-here`;
+  const handleApiCall = async () => {
+    try {
+      const res = await fetch("https://webhook.site/4cc57ff6-779d-4909-be07-d45ece4ebc34", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "A":"A"
+        })
+      });
+    } catch (error) {
+    }
+  };
 
   const curlExample = `curl -X GET 'https://api.apper.com/ap/user/12345/projects/project-123/ApperFunction' \\
   -H 'Authorization: Bearer your-token-here' \\
@@ -236,6 +250,24 @@ data = response.json()`;
             <span>Monitor your API usage and revoke tokens if compromised</span>
           </li>
         </ul>
+      </div>
+      <div className="mt-12">
+        <button
+          onClick={handleApiCall}
+          className="px-5 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90"
+        >
+          Call API
+        </button>
+
+        {response && (
+          <div className="mt-6">
+            <CodeBlock
+              code={response}
+              language="json"
+              title="API Response"
+            />
+          </div>https://test-apper-dev.integrately.com/images/live-chat.svg$0
+        )}
       </div>
     </motion.div>
   );
