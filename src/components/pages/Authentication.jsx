@@ -1,8 +1,11 @@
-import { motion } from 'framer-motion';
-import ApperIcon from '@/components/ApperIcon';
-import CodeBlock from '@/components/molecules/CodeBlock';
+import { motion } from "framer-motion";
+import React, { useState } from "react";
+import ApperIcon from "@/components/ApperIcon";
+import Error from "@/components/ui/Error";
+import CodeBlock from "@/components/molecules/CodeBlock";
 
 const Authentication = () => {
+  const [response, setResponse] = useState(null);
   const authHeaderExample = `Authorization: Bearer your-token-here`;
   const handleApiCall = async () => {
     try {
@@ -15,8 +18,12 @@ const Authentication = () => {
           "A":"A"
         })
       });
+      
+      const responseData = await res.json();
+      setResponse(JSON.stringify(responseData, null, 2));
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      setResponse(`Error: ${error.message}`);
     }
   };
 
