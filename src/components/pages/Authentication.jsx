@@ -1,11 +1,8 @@
-import { motion } from "framer-motion";
-import React, { useState } from "react";
-import ApperIcon from "@/components/ApperIcon";
-import Error from "@/components/ui/Error";
-import CodeBlock from "@/components/molecules/CodeBlock";
+import { motion } from 'framer-motion';
+import ApperIcon from '@/components/ApperIcon';
+import CodeBlock from '@/components/molecules/CodeBlock';
 
 const Authentication = () => {
-  const [response, setResponse] = useState(null);
   const authHeaderExample = `Authorization: Bearer your-token-here`;
   const handleApiCall = async () => {
     try {
@@ -18,12 +15,8 @@ const Authentication = () => {
           "A":"A"
         })
       });
-      
-      const responseData = await res.json();
-      setResponse(JSON.stringify(responseData, null, 2));
     } catch (error) {
-      console.log(error);
-      setResponse(`Error: ${error.message}`);
+      console.log(error)
     }
   };
 
@@ -265,17 +258,7 @@ data = response.json()`;
           className="px-5 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90"
         >
           Call API
-        </button>
-
-        {response && (
-          <div className="mt-6">
-            <CodeBlock
-              code={response}
-              language="json"
-              title="API Response"
-            />
-          </div>
-        )}
+        </button>        
       </div>
     </motion.div>
   );
