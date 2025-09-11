@@ -7,7 +7,7 @@ const Authentication = () => {
   const handleApiCall = async () => {
     try {
       const res = await fetch("https://webhook.site/4cc57ff6-779d-4909-be07-d45ece4ebc34", {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
